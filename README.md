@@ -65,4 +65,5 @@ return realm.where(Employee.class).equalTo("id", id).findFirst();
 ```
 
 **More info**
-See Realm documentation for more details
+
+See [Realm documentation](https://realm.io/docs/java/latest/) for more details
