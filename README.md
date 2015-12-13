@@ -54,10 +54,12 @@ public class User extends RealmObject {
 ```java 
 // Get a Realm instance for this thread
 Realm realm = Realm.getDefaultInstance();
-
-realm.beginTransaction();
-realm.copyToRealmOrUpdate(obj); 
-realm.commitTransaction();
+realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+                realm.copyToRealmOrUpdate(obj);
+            }
+        });
 ```
 
 ```java
