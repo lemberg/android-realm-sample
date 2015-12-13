@@ -1,9 +1,9 @@
-# android-realm-sample
-
 **Realm database**
+
 Realm Java enables you to efficiently write your app’s model layer in a safe, persisted and fast way. 
 
 **Prerequisites**
+
 Realm do not support Java outside of Android at the moment.
 Android Studio >= 0.8.6
 A recent version of the Android SDK.
