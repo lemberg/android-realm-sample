@@ -1,70 +1,72 @@
-package com.rd.testproject.model.db.dao;
+**Realm database**
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+Realm Java enables you to efficiently write your app’s model layer in a safe, persisted and fast way. 
 
-import com.rd.testproject.model.db.data.User;
+**Prerequisites**
 
-import java.util.ArrayList;
-import java.util.List;
+ 1. Realm do not support Java outside of Android at the moment.
+ 2. Android Studio >= 0.8.6
+ 3. A recent version of the Android SDK.
+ 4. JDK version >=7.
+ 5. Support all Android versions since API Level 9 (Android 2.3
+    Gingerbread & above).
 
-import io.realm.Realm;
-import io.realm.RealmResults;
+**Pros:**
 
-public class ContactDao {
+ - Fast in implementation
+ - Very fast in data loading and saving
+ - Easy to learn and use
 
-    public void saveUser(@NonNull final Realm realm, @NonNull final User user) {
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-                realm.copyToRealmOrUpdate(user);
-            }
-        });
-    }
+**Cons:**
 
-    public void saveUser(@NonNull final Realm realm, @NonNull final User user, @NonNull Realm.Transaction.Callback callback) {
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-                realm.copyToRealmOrUpdate(user);
-            }
+ - In object we can only have:
+ - private instance fields.
+ - default getter and setter methods.
+ - static fields, both public and private.
+ - static methods.
+ - implementing interfaces with no methods.
+ - requires pre-compiled (.so) files integration for all supported
+   processor models, making app useless in case if new processor
+   architecture is released and increasing app size by ~2mb per
+   architecture.
+ - Is still in beta (top version is 0.86.0) and license might be updated
+   after release (like with genymotion).
 
-        }, callback);
-    }
+**Gettings started**
+Add compile *'io.realm:realm-android:0.86.0'* to the dependencies of your project
 
-    public void saveUserList(@NonNull final Realm realm, @NonNull final List<User> userList) {
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-                realm.copyToRealmOrUpdate(userList);
-            }
+**Here how it looks like**
 
-        });
-    }
+```java 
+public class User extends RealmObject {
 
-    public void saveUserList(@NonNull final Realm realm, @NonNull final List<User> userList, @NonNull Realm.Transaction.Callback callback) {
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-                realm.copyToRealmOrUpdate(userList);
-            }
+   @PrimaryKey
+   private long id;
+   private String firstName;
+   private String lastName;
+   private int age;
+   private RealmList<RealmString> contactList;
 
-        }, callback);
-    }
-
-    @Nullable
-    public User loadUser(@NonNull Realm realm, long id) {
-        return realm.where(User.class).equalTo("id", id).findFirst();
-    }
-
-    @NonNull
-    public List<User> loadUserList(@NonNull Realm realm) {
-        List<User> userList = new ArrayList<>();
-        userList.addAll(realm.where(User.class).findAll());
-        return userList;
-    }
-
-    public RealmResults<User> loadUserListAsync(@NonNull Realm realm) {
-        return realm.where(User.class).findAllAsync();
-    }
+   //Generated getters and setters
 }
+```
+	
+```java 
+// Get a Realm instance for this thread
+Realm realm = Realm.getDefaultInstance();
+realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+                realm.copyToRealmOrUpdate(obj);
+            }
+        });
+```
+
+```java
+// Load User by id
+return realm.where(Employee.class).equalTo("id", id).findFirst(); 
+```
+
+**More info**
+
+See [Realm documentation](https://realm.io/docs/java/latest/) for more details
