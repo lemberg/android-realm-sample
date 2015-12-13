@@ -4,11 +4,12 @@ Realm Java enables you to efficiently write your app’s model layer in a safe, 
 
 **Prerequisites**
 
-Realm do not support Java outside of Android at the moment.
-Android Studio >= 0.8.6
-A recent version of the Android SDK.
-JDK version >=7.
-Support all Android versions since API Level 9 (Android 2.3 Gingerbread & above).
+ 1. Realm do not support Java outside of Android at the moment.
+ 2. Android Studio >= 0.8.6
+ 3. A recent version of the Android SDK.
+ 4. JDK version >=7.
+ 5. Support all Android versions since API Level 9 (Android 2.3
+    Gingerbread & above).
 
 **Pros:**
 
@@ -40,13 +41,13 @@ Add compile *'io.realm:realm-android:0.86.0'* to the dependencies of your projec
 public class User extends RealmObject {
 
    @PrimaryKey
-   private long id;   //primary key
+   private long id;
    private String firstName;
    private String lastName;
    private int age;
    private RealmList<RealmString> contactList;
 
-// ... Generated getters and setters ...
+   //Generated getters and setters
 }
 ```
 	
