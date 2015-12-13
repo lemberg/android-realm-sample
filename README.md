@@ -47,14 +47,14 @@ Add compile *'io.realm:realm-android:0.86.0'* to the dependencies of your projec
 // ... Generated getters and setters ...
 }```
 	
-``java// Get a Realm instance for this thread
+``java // Get a Realm instance for this thread
 Realm realm = Realm.getDefaultInstance();
 
 realm.beginTransaction();
 realm.copyToRealmOrUpdate(obj); 
 realm.commitTransaction();``
 
-``java// Load User by id
+``java // Load User by id
 return realm.where(Employee.class).equalTo("id", id).findFirst();``
 
 **More info**
