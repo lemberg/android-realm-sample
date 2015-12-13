@@ -33,6 +33,7 @@ Realm Java enables you to efficiently write your app’s model layer in a safe, 
    after release (like with genymotion).
 
 **Gettings started**
+
 Add compile `'io.realm:realm-android:0.86.0'` to the dependencies of your project
 
 **Here how it looks like**
