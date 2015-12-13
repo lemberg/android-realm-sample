@@ -35,6 +35,7 @@ Support all Android versions since API Level 9 (Android 2.3 Gingerbread & above)
 Add compile *'io.realm:realm-android:0.86.0'* to the dependencies of your project
 
 **Here how it looks like**
+
 ```java public class User extends RealmObject {
 
    @PrimaryKey
@@ -47,15 +48,15 @@ Add compile *'io.realm:realm-android:0.86.0'* to the dependencies of your projec
 // ... Generated getters and setters ...
 }```
 	
-``java // Get a Realm instance for this thread
+```java // Get a Realm instance for this thread
 Realm realm = Realm.getDefaultInstance();
 
 realm.beginTransaction();
 realm.copyToRealmOrUpdate(obj); 
-realm.commitTransaction();``
+realm.commitTransaction();```
 
-``java // Load User by id
-return realm.where(Employee.class).equalTo("id", id).findFirst();``
+```java // Load User by id
+return realm.where(Employee.class).equalTo("id", id).findFirst(); ```
 
 **More info**
 See Realm documentation for more details
