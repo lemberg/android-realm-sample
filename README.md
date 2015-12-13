@@ -36,7 +36,8 @@ Add compile *'io.realm:realm-android:0.86.0'* to the dependencies of your projec
 
 **Here how it looks like**
 
-```java public class User extends RealmObject {
+```java 
+public class User extends RealmObject {
 
    @PrimaryKey
    private long id;   //primary key
@@ -46,17 +47,22 @@ Add compile *'io.realm:realm-android:0.86.0'* to the dependencies of your projec
    private RealmList<RealmString> contactList;
 
 // ... Generated getters and setters ...
-}```
+}
+```
 	
-```java // Get a Realm instance for this thread
+```java 
+// Get a Realm instance for this thread
 Realm realm = Realm.getDefaultInstance();
 
 realm.beginTransaction();
 realm.copyToRealmOrUpdate(obj); 
-realm.commitTransaction();```
+realm.commitTransaction();
+```
 
-```java // Load User by id
-return realm.where(Employee.class).equalTo("id", id).findFirst(); ```
+```java
+// Load User by id
+return realm.where(Employee.class).equalTo("id", id).findFirst(); 
+```
 
 **More info**
 See Realm documentation for more details
