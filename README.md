@@ -65,7 +65,7 @@ realm.executeTransaction(new Realm.Transaction() {
 
 ```java
 // Load User by id
-return realm.where(Employee.class).equalTo("id", id).findFirst(); 
+return realm.where(User.class).equalTo("id", id).findFirst(); 
 ```
 
 **More info**
