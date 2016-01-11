@@ -27,8 +27,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mRealm = Realm.getDefaultInstance();
 
-        saveUserList();
-        loadUserList();
+        saveUserList(mRealm);
+        loadUserList(mRealm);
     }
 
     @Override
@@ -39,38 +39,27 @@ public class HomeActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void saveUserList() {
-        if (mRealm != null) {
-            List<User> userList = generateUserList();
-            RealmManager.createEmployeeDao().saveUserList(mRealm, userList);
-        }
+    private void saveUserList(@NonNull Realm realm) {
+        List<User> userList = generateUserList();
+        RealmManager.createEmployeeDao().saveUserList(realm, userList);
     }
 
-    private void loadUserListAsync() {
-        if (mRealm == null) {
-            return;
-        }
+    private List<User> loadUserList(@NonNull Realm realm) {
+        List<User> userList = new ArrayList<>();
+        userList.addAll(RealmManager.createEmployeeDao().loadUserList(realm));
 
-        final RealmResults<User> result = RealmManager.createEmployeeDao().loadUserListAsync(mRealm);
-        result.addChangeListener(new RealmChangeListener() {
+        return userList;
+    }
+
+    private void loadUserListAsync(@NonNull Realm realm) {
+        final RealmResults<User> userList = RealmManager.createEmployeeDao().loadUserListAsync(realm);
+        userList.addChangeListener(new RealmChangeListener() {
             @Override
             public void onChange() {
-                List<User> userList = new ArrayList<>();
-                userList.addAll(result);
+                //userList is now filled with data
                 //update UI
             }
         });
-    }
-
-    private  List<User> loadUserList() {
-        if (mRealm == null) {
-            return new ArrayList<>();
-        }
-
-        List<User> userList = new ArrayList<>();
-        userList.addAll(RealmManager.createEmployeeDao().loadUserList(mRealm));
-
-        return userList;
     }
 
     @NonNull
