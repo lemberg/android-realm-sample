@@ -19,22 +19,14 @@ Realm Java enables you to efficiently write your app’s model layer in a safe, 
 
 **Cons:**
 
- - In object we can only have:
- - private instance fields.
- - default getter and setter methods.
- - static fields, both public and private.
- - static methods.
- - implementing interfaces with no methods.
- - requires pre-compiled (.so) files integration for all supported
-   processor models, making app useless in case if new processor
-   architecture is released and increasing app size by ~2mb per
-   architecture.
- - Is still in beta (top version is 0.86.0) and license might be updated
-   after release (like with genymotion).
+ - Not possible to extend anything else than `RealmObject`
+ - No other methods except default getters and setters
+ - Implementing only interfaces with no methods.
 
-**Getting started**
+See [other limitations](https://realm.io/docs/java/latest/#current-limitations).
 
-Add compile `'io.realm:realm-android:0.86.0'` to the dependencies of your project
+**Gettings started**
+First of all you have to add compile `'io.realm:realm-android:x.xx.x'` dependencies to your project. See latest realm database version on [realm.io](https://realm.io/docs/java/latest/).
 
 **Here how it looks like**
 
@@ -53,8 +45,8 @@ public class User extends RealmObject {
 ```
 	
 ```java 
-// Get a Realm instance for this thread
-Realm realm = Realm.getDefaultInstance();
+// Save a new object into database
+Realm realm = Realm.getDefaultInstance(); // get a Realm instance for this thread
 realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
@@ -64,13 +56,28 @@ realm.executeTransaction(new Realm.Transaction() {
 ```
 
 ```java
-// Load User by id
-return realm.where(User.class).equalTo("id", id).findFirst(); 
+// Query with single condition
+User user = realm.where(User.class).equalTo("id", id).findFirst();
+```
+
+```java
+// Query with multi conditions
+List<User> userList = realm.where(User.class)
+                                  .equalTo("firstName", "John")
+                                  .or()
+                                  .equalTo("firstName", "Peter")
+                                  .findAll();
+```
+
+```java
+// Query to look for all users
+List<User> userList = realm.where(User.class).findAll();
 ```
 
 **More info**
 
 See [Realm documentation](https://realm.io/docs/java/latest/) for more details
+
 
 
 **License**
