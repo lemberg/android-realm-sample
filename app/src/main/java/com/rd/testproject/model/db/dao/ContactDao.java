@@ -5,10 +5,10 @@ import android.support.annotation.Nullable;
 
 import com.rd.testproject.model.db.data.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmAsyncTask;
 import io.realm.RealmResults;
 
 public class ContactDao {
@@ -38,12 +38,11 @@ public class ContactDao {
             public void execute(Realm bgRealm) {
                 realm.copyToRealmOrUpdate(userList);
             }
-
         });
     }
 
-    public void saveUserList(@NonNull final Realm realm, @NonNull final List<User> userList, @NonNull Realm.Transaction.Callback callback) {
-        realm.executeTransaction(new Realm.Transaction() {
+    public RealmAsyncTask saveUserList(@NonNull final Realm realm, @NonNull final List<User> userList, @NonNull Realm.Transaction.Callback callback) {
+        return realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
                 realm.copyToRealmOrUpdate(userList);
@@ -59,9 +58,7 @@ public class ContactDao {
 
     @NonNull
     public List<User> loadUserList(@NonNull Realm realm) {
-        List<User> userList = new ArrayList<>();
-        userList.addAll(realm.where(User.class).findAll());
-        return userList;
+        return realm.where(User.class).findAll();
     }
 
     public RealmResults<User> loadUserListAsync(@NonNull Realm realm) {
