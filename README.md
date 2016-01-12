@@ -4,11 +4,11 @@ Realm Java enables you to efficiently write your app’s model layer in a safe, 
 
 **Prerequisites**
 
- 1. Realm do not support Java outside of Android at the moment.
- 2. Android Studio >= 0.8.6
+ 1. [Realm](https://realm.io/) do not support Java outside of Android at the moment.
+ 2. [Android Studio](http://developer.android.com/sdk/index.html?gclid=COOv_bPoo8oCFcoGcwodcJ4AVQ) >= 0.8.6
  3. A recent version of the Android SDK.
  4. JDK version >=7.
- 5. Support all Android versions since API Level 9 (Android 2.3
+ 5. Support all [Android versions](http://developer.android.com/about/dashboards/index.html) since API Level 9 (Android 2.3
     Gingerbread & above).
 
 **Pros:**
