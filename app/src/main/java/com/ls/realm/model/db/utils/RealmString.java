@@ -1,4 +1,4 @@
-package com.rd.testproject.model.db.utils;
+package com.ls.realm.model.db.utils;
 
 import io.realm.RealmObject;
 

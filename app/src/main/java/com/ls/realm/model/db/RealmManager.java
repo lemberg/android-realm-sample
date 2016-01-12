@@ -1,6 +1,6 @@
-package com.rd.testproject.model.db;
+package com.ls.realm.model.db;
 
-import com.rd.testproject.model.db.dao.ContactDao;
+import com.ls.realm.model.db.dao.ContactDao;
 
 public class RealmManager {
 

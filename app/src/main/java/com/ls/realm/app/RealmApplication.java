@@ -1,4 +1,4 @@
-package com.rd.testproject.app;
+package com.ls.realm.app;
 
 import android.app.Application;
 

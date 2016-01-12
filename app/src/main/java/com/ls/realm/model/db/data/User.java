@@ -1,6 +1,6 @@
-package com.rd.testproject.model.db.data;
+package com.ls.realm.model.db.data;
 
-import com.rd.testproject.model.db.utils.RealmString;
+import com.ls.realm.model.db.utils.RealmString;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;

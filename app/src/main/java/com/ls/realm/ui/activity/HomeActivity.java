@@ -1,13 +1,13 @@
-package com.rd.testproject.ui.activity;
+package com.ls.realm.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
-import com.rd.testproject.R;
-import com.rd.testproject.model.db.RealmManager;
-import com.rd.testproject.model.db.data.User;
-import com.rd.testproject.model.db.utils.RealmString;
+import com.ls.realm.R;
+import com.ls.realm.model.db.RealmManager;
+import com.ls.realm.model.db.data.User;
+import com.ls.realm.model.db.utils.RealmString;
 
 import java.util.ArrayList;
 import java.util.List;
