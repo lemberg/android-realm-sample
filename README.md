@@ -1,5 +1,6 @@
 
 **Realm database**
+
 Realm Java enables you to efficiently write your app’s model layer in a safe, persisted and fast way. 
 
 **Realm is a replacement for SQLite & Core Data**
@@ -142,6 +143,7 @@ public class RealmApplication extends Application {
 
 
 **More Info**
+
 See [Realm documentation](https://realm.io/docs/java/latest/) for more details
 
 **License**
