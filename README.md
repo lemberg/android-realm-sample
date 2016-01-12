@@ -5,13 +5,13 @@ Realm Java enables you to efficiently write your app’s model layer in a safe, 
 
 **Realm is a replacement for SQLite & Core Data**
 
- - *Easy to Use*
+ *Easy to Use*
 Realm is not an ORM on top of SQLite. Instead it uses its own persistence engine, built for simplicity (& speed).
 
- - *Fast*
+ *Fast*
  Thanks to its zero-copy design, Realm is much faster than an ORM, and is often faster than raw SQLite as well. 
 
- - *Cross-Platform*
+ *Cross-Platform*
  You can share Realm files across platforms and use the same high-level models.
 
 See graphic performance comparison to other databases [here](https://realm.io/news/realm-for-android/#realm-for-android).
@@ -50,15 +50,14 @@ realm.where(User.class).findAll();
 
 **Installation**
 
- - Make sure your project uses jcenter as a dependency repository
-    (default on latest version of the Android Gradle plugin).
-    
- - Add compile `'io.realm:realm-android:0.87.2'` to the dependencies of
-    your project. See latest version on [realm.io](https://realm.io/docs/java/latest/)
-    
- - In the Android Studio menu: Tools->Android->Sync Project with Gradle
-    Files.
+ 1. Make sure your project uses jcenter as a dependency repository
+        (default on latest version of the Android Gradle plugin).
 
+ 2. Add compile `'io.realm:realm-android:0.87.2'` to the dependencies of
+        your project. See latest version on [realm.io](https://realm.io/docs/java/latest/)
+
+ 3. In the Android Studio menu: Tools->Android->Sync Project with Gradle
+        Files.
 
 **Best Practices**
 
@@ -141,6 +140,22 @@ public class RealmApplication extends Application {
    again when reacting to a RealmChangedListener. The objects are
    already updated and ready to be redrawn on the screen.
 
+**Keep in mind while using Realm (Limitations)**
+
+RealmObject can have:
+
+ - Only private instance fields.
+ - Only default getter and setter methods.
+ - Static fields, both public and private.
+ - Static methods.
+ - Implementing interfaces with no methods.
+
+You can only save objects that extend RealmObject inside a Realm.
+That means that you have to declare an `RealmList` if you want to save a List, or extend `RealmObject` while saving an object. 
+
+
+
+See [StackOverflow](http://stackoverflow.com/questions/30097810/listobject-or-realmlistrealmobject-on-realm-android) answer for data saving.
 
 **More Info**
 
