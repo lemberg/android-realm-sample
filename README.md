@@ -6,12 +6,15 @@ Realm Java enables you to efficiently write your app’s model layer in a safe, 
 **Realm is a replacement for SQLite & Core Data**
 
  *Easy to Use*
+ 
 Realm is not an ORM on top of SQLite. Instead it uses its own persistence engine, built for simplicity (& speed).
 
  *Fast*
+ 
  Thanks to its zero-copy design, Realm is much faster than an ORM, and is often faster than raw SQLite as well. 
 
  *Cross-Platform*
+ 
  You can share Realm files across platforms and use the same high-level models.
 
 See graphic performance comparison to other databases [here](https://realm.io/news/realm-for-android/#realm-for-android).
