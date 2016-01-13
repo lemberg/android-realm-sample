@@ -106,7 +106,7 @@ userList.addChangeListener(new RealmChangeListener() {
    
    This means that on the UI thread the easiest and safest approach is
    to open a Realm instance in all your Activities and Fragments and
-   close it again when the Activity or Fragment is destroyed.
+   close it again when the `Activity` or `Fragment` is destroyed.
 
 ```java
 public class RealmApplication extends Application {
@@ -137,15 +137,15 @@ public class RealmApplication extends Application {
 ```
 *Reuse RealmResults and RealmObjects*
 
- - On the UI thread and all other Looper threads, all RealmObjects and
-   RealmResults are automatically refreshed when changes are made to the
+ - On the UI thread and all other Looper threads, all `RealmObjects` and
+   `RealmResults` are automatically refreshed when changes are made to the
    Realm. This means that it isn’t necessary to fetch those objects
-   again when reacting to a RealmChangedListener. The objects are
+   again when reacting to a `RealmChangedListener`. The objects are
    already updated and ready to be redrawn on the screen.
 
 **Keep in mind while using Realm (Limitations)**
 
-RealmObject can have:
+`RealmObject` can have:
 
  - Only private instance fields.
  - Only default getter and setter methods.
@@ -153,7 +153,7 @@ RealmObject can have:
  - Static methods.
  - Implementing interfaces with no methods.
 
-You can only save objects that extend RealmObject inside a Realm.
+You can only save objects that extend `RealmObject` inside a Realm.
 That means that you have to declare an `RealmList` if you want to save a List, or extend `RealmObject` while saving an object. 
 
 
