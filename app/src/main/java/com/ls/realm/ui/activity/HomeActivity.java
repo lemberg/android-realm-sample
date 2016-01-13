@@ -3,32 +3,37 @@ package com.ls.realm.ui.activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.ls.realm.R;
 import com.ls.realm.model.db.RealmManager;
 import com.ls.realm.model.db.data.User;
-import com.ls.realm.model.db.utils.RealmString;
+import com.ls.realm.model.db.utils.FakeListGenerator;
+import com.ls.realm.ui.adapter.RealmAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private RealmResults<User> mDataList;
+    private RealmAdapter mAdapter;
     private Realm mRealm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.ac_home);
         mRealm = Realm.getDefaultInstance();
 
+        initViews();
         saveUserList(mRealm);
-        loadUserList(mRealm);
+        loadUserListAsync(mRealm);
     }
 
     @Override
@@ -39,53 +44,38 @@ public class HomeActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    private void initViews() {
+        mAdapter = new RealmAdapter();
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+    }
+
     private void saveUserList(@NonNull Realm realm) {
-        List<User> userList = generateUserList();
+        List<User> userList = FakeListGenerator.generateUserList();
         RealmManager.createEmployeeDao().saveUserList(realm, userList);
     }
 
-    private List<User> loadUserList(@NonNull Realm realm) {
-        List<User> userList = new ArrayList<>();
-        userList.addAll(RealmManager.createEmployeeDao().loadUserList(realm));
-
-        return userList;
-    }
-
     private void loadUserListAsync(@NonNull Realm realm) {
-        final RealmResults<User> userList = RealmManager.createEmployeeDao().loadUserListAsync(realm);
-        userList.addChangeListener(new RealmChangeListener() {
+        mDataList = RealmManager.createEmployeeDao().loadUserListAsync(realm);
+        mDataList.addChangeListener(new RealmChangeListener() {
             @Override
             public void onChange() {
-                //userList is now filled with data
-                //update UI
+                updateRecyclerView();
             }
         });
     }
 
-    @NonNull
-    private List<User> generateUserList() {
-        List<User> userList = new ArrayList<>();
-        RealmList<RealmString> contactList = generateContactList();
-
-        for (int i = 1; i <= 1000; i++) {
-            User user = new User();
-            user.setId(i);
-            user.setFirstName("First name " + i);
-            user.setLastName("Last name " + i);
-            user.setAge(i + 20);
-            user.setContactList(contactList);
-
-            userList.add(user);
+    private void updateRecyclerView() {
+        if (mAdapter != null && mDataList != null) {
+            if (mAdapter.getItemCount() == 0) {
+                mAdapter.setData(mDataList);
+            }
+            mAdapter.notifyDataSetChanged();
         }
-
-        return userList;
-    }
-
-    private RealmList<RealmString> generateContactList() {
-        RealmList<RealmString> contactList = new RealmList<>();
-        for (int i = 0; i < 3; i++) {
-            contactList.add(new RealmString("Contact " + i));
-        }
-        return contactList;
     }
 }

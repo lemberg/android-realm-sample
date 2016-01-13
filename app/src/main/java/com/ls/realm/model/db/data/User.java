@@ -6,14 +6,20 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class User extends RealmObject {
+public class User extends RealmObject implements IViewType {
 
     @PrimaryKey
     private long id;
     private String firstName;
     private String lastName;
+    private String email;
     private int age;
+
     private RealmList<RealmString> contactList;
+
+    public User() {
+        contactList = new RealmList<>();
+    }
 
     public long getId() {
         return id;
@@ -45,6 +51,15 @@ public class User extends RealmObject {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public RealmList<RealmString> getContactList() {
