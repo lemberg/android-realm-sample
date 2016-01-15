@@ -42,7 +42,7 @@ public class User extends RealmObject {
  realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
-                realm.copyToRealmOrUpdate(user);
+                bgRealm.copyToRealmOrUpdate(user);
             }
         });
 ```
@@ -87,7 +87,7 @@ userList.addChangeListener(new RealmChangeListener() {
   realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
-                realm.copyToRealmOrUpdate(user);
+                bgRealm.copyToRealmOrUpdate(user);
             }
         });
 ```
