@@ -9,15 +9,16 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
+import io.realm.RealmObject;
 import io.realm.RealmResults;
 
-public class ContactDao {
+public class UserDao {
 
     public void saveUser(@NonNull final Realm realm, @NonNull final User user) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
-                realm.copyToRealmOrUpdate(user);
+                bgRealm.copyToRealmOrUpdate(user);
             }
         });
     }
@@ -26,7 +27,7 @@ public class ContactDao {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
-                realm.copyToRealmOrUpdate(user);
+                bgRealm.copyToRealmOrUpdate(user);
             }
 
         }, callback);
@@ -36,7 +37,7 @@ public class ContactDao {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
-                realm.copyToRealmOrUpdate(userList);
+                bgRealm.copyToRealmOrUpdate(userList);
             }
         });
     }
@@ -45,19 +46,19 @@ public class ContactDao {
         return realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
-                realm.copyToRealmOrUpdate(userList);
+                bgRealm.copyToRealmOrUpdate(userList);
             }
 
         }, callback);
     }
 
     @Nullable
-    public User loadUser(@NonNull Realm realm, long id) {
+    public RealmObject loadUser(@NonNull Realm realm, final long id) {
         return realm.where(User.class).equalTo("id", id).findFirst();
     }
 
     @NonNull
-    public List<User> loadUserList(@NonNull Realm realm) {
+    public RealmResults<User> loadUserList(@NonNull Realm realm) {
         return realm.where(User.class).findAll();
     }
 

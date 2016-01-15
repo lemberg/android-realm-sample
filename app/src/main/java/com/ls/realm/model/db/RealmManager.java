@@ -1,10 +1,10 @@
 package com.ls.realm.model.db;
 
-import com.ls.realm.model.db.dao.ContactDao;
+import com.ls.realm.model.db.dao.UserDao;
 
 public class RealmManager {
 
-    public static ContactDao createEmployeeDao() {
-        return new ContactDao();
+    public static UserDao createUserDao() {
+        return new UserDao();
     }
 }

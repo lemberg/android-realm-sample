@@ -9,7 +9,7 @@ import java.util.List;
 
 import io.realm.RealmList;
 
-public class FakeListGenerator {
+public class ObjectGenerator {
 
     @NonNull
     public static List<User> generateUserList() {
@@ -28,6 +28,17 @@ public class FakeListGenerator {
         }
 
         return userList;
+    }
+
+    public static User generateUser() {
+        User user = new User();
+        user.setId(1);
+        user.setAge(22);
+        user.setEmail("user@gmail.com");
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        user.setContactList(generateContactList());
+        return user;
     }
 
     private static RealmList<RealmString> generateContactList() {
