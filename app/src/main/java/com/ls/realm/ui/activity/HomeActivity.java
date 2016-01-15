@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import com.ls.realm.R;
 import com.ls.realm.model.db.RealmManager;
 import com.ls.realm.model.db.data.User;
-import com.ls.realm.model.db.utils.ObjectGenerator;
+import com.ls.realm.model.db.utils.Generator;
 import com.ls.realm.ui.adapter.RealmAdapter;
 
 import io.realm.Realm;
@@ -30,13 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         mRealm = Realm.getDefaultInstance();
 
         initViews();
-
-        long count = mRealm.where(User.class).count();
-        if (count == 0) {
-            saveUserList(mRealm);
-        } else {
-            loadUserListAsync(mRealm);
-        }
+        loadData();
     }
 
     @Override
@@ -62,8 +56,17 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
+    private void loadData() {
+        long count = mRealm.where(User.class).count();
+        if (count == 0) {
+            saveUserList(mRealm);
+        } else {
+            loadUserListAsync(mRealm);
+        }
+    }
+
     private void saveUserList(@NonNull Realm realm) {
-        RealmManager.createUserDao().saveUserList(realm, ObjectGenerator.generateUserList(), new Realm.Transaction.Callback() {
+        RealmManager.createUserDao().saveUserList(realm, Generator.generateUserList(), new Realm.Transaction.Callback() {
             @Override
             public void onSuccess() {
                 loadUserListAsync(mRealm);
