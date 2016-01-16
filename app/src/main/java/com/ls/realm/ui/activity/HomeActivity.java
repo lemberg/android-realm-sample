@@ -1,7 +1,6 @@
 package com.ls.realm.ui.activity;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,7 +12,6 @@ import com.ls.realm.model.db.data.User;
 import com.ls.realm.model.db.utils.Generator;
 import com.ls.realm.ui.adapter.RealmAdapter;
 
-import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
@@ -21,13 +19,12 @@ public class HomeActivity extends AppCompatActivity {
 
     private RealmResults<User> mDataList;
     private RealmAdapter mAdapter;
-    private Realm mRealm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_home);
-        mRealm = Realm.getDefaultInstance();
+        RealmManager.open();
 
         initViews();
         loadData();
@@ -39,9 +36,7 @@ public class HomeActivity extends AppCompatActivity {
             mDataList.removeChangeListeners();
         }
 
-        if (mRealm != null) {
-            mRealm.close();
-        }
+        RealmManager.close();
         super.onDestroy();
     }
 
@@ -57,29 +52,20 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        long count = mRealm.where(User.class).count();
+        long count = RealmManager.createUserDao().count();
         if (count == 0) {
-            saveUserList(mRealm);
+            saveUserList();
         } else {
-            loadUserListAsync(mRealm);
+            loadUserListAsync();
         }
     }
 
-    private void saveUserList(@NonNull Realm realm) {
-        RealmManager.createUserDao().saveUserList(realm, Generator.generateUserList(), new Realm.Transaction.Callback() {
-            @Override
-            public void onSuccess() {
-                loadUserListAsync(mRealm);
-            }
-
-            @Override
-            public void onError(Exception e) {
-            }
-        });
+    private void saveUserList() {
+        RealmManager.createUserDao().save(Generator.generateUserList());
     }
 
-    private void loadUserListAsync(@NonNull Realm realm) {
-        mDataList = RealmManager.createUserDao().loadUserListAsync(realm);
+    private void loadUserListAsync() {
+        mDataList = RealmManager.createUserDao().loadAllAsync();
         mDataList.addChangeListener(new RealmChangeListener() {
             @Override
             public void onChange() {

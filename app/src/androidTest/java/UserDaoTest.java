@@ -7,38 +7,28 @@ import com.ls.realm.model.db.utils.Generator;
 
 import java.util.List;
 
-import io.realm.Realm;
-
 public class UserDaoTest extends InstrumentationTestCase {
-
-    private Realm mRealm;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-
-        mRealm = Realm.getDefaultInstance();
-        mRealm.beginTransaction();
-        mRealm.clear(User.class);
-        mRealm.commitTransaction();
+        RealmManager.open();
+        RealmManager.clear();
     }
 
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-
-        mRealm.beginTransaction();
-        mRealm.clear(User.class);
-        mRealm.commitTransaction();
-        mRealm.close();
+        RealmManager.clear();
+        RealmManager.close();
     }
 
     public void testSaveUser() throws Exception {
         User saveUser = Generator.generateUser();
 
         UserDao dao = RealmManager.createUserDao();
-        dao.saveUser(mRealm, saveUser);
-        User loadUser = (User) dao.loadUser(mRealm, saveUser.getId());
+        dao.save(saveUser);
+        User loadUser = (User) dao.loadBy(saveUser.getId());
 
         boolean isEquals = User.equals(saveUser, loadUser);
         assertTrue(isEquals);
@@ -48,8 +38,8 @@ public class UserDaoTest extends InstrumentationTestCase {
         List<User> saveList = Generator.generateUserList();
 
         UserDao dao = RealmManager.createUserDao();
-        dao.saveUserList(mRealm, saveList);
-        List<User> loadList = dao.loadUserList(mRealm);
+        dao.save(saveList);
+        List<User> loadList = dao.loadAll();
 
         boolean isEquals = User.equals(saveList, loadList);
         assertTrue(isEquals);
