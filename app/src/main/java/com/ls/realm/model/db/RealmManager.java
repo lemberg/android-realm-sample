@@ -9,8 +9,8 @@ public class RealmManager {
 
     private static Realm mRealm;
 
-    public static void open() {
-        mRealm = Realm.getDefaultInstance();
+    public static Realm open() {
+        return mRealm = Realm.getDefaultInstance();
     }
 
     public static void close() {
@@ -32,7 +32,7 @@ public class RealmManager {
 
     public static UserDao createUserDao() {
         if (mRealm == null) {
-            throw new IllegalStateException("RealmManager: Please call openRealm() method first");
+            throw new IllegalStateException("RealmManager: Please call close() method first");
         }
 
         return new UserDao(mRealm);

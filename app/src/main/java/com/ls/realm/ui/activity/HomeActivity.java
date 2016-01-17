@@ -12,12 +12,13 @@ import com.ls.realm.model.db.data.User;
 import com.ls.realm.model.db.utils.Generator;
 import com.ls.realm.ui.adapter.RealmAdapter;
 
+import java.util.List;
+
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private RealmResults<User> mDataList;
     private RealmAdapter mAdapter;
 
     @Override
@@ -27,15 +28,12 @@ public class HomeActivity extends AppCompatActivity {
         RealmManager.open();
 
         initViews();
-        loadData();
+        saveUserList();
+        loadUserListAsync();
     }
 
     @Override
     protected void onDestroy() {
-        if (mDataList != null) {
-            mDataList.removeChangeListeners();
-        }
-
         RealmManager.close();
         super.onDestroy();
     }
@@ -51,34 +49,23 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    private void loadData() {
-        long count = RealmManager.createUserDao().count();
-        if (count == 0) {
-            saveUserList();
-        } else {
-            loadUserListAsync();
-        }
-    }
-
     private void saveUserList() {
         RealmManager.createUserDao().save(Generator.generateUserList());
     }
 
     private void loadUserListAsync() {
-        mDataList = RealmManager.createUserDao().loadAllAsync();
-        mDataList.addChangeListener(new RealmChangeListener() {
+        final RealmResults<User> dataList = RealmManager.createUserDao().loadAllAsync();
+        dataList.addChangeListener(new RealmChangeListener() {
             @Override
             public void onChange() {
-                updateRecyclerView();
+                updateRecyclerView(dataList);
             }
         });
     }
 
-    private void updateRecyclerView() {
-        if (mAdapter != null && mDataList != null) {
-            if (mAdapter.getItemCount() == 0) {
-                mAdapter.setData(mDataList);
-            }
+    private void updateRecyclerView(List<User> userList) {
+        if (mAdapter != null && userList != null) {
+            mAdapter.setData(userList);
             mAdapter.notifyDataSetChanged();
         }
     }
