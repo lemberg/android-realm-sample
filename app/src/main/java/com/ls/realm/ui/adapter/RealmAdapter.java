@@ -70,7 +70,7 @@ public class RealmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         viewHolder.txtLastName.setText(user.getLastName());
         viewHolder.txtAge.setText(String.format("%d yo", user.getAge()));
         viewHolder.txtEmail.setText(user.getEmail());
-        viewHolder.txtContactsCount.setText(String.format("Contacts count: %d", user.getContactList().size()));
+        viewHolder.txtCount.setText(String.format("Contacts count: %d", user.getContactList().size()));
     }
 
     private static class UserViewHolder extends RecyclerView.ViewHolder {
@@ -79,7 +79,7 @@ public class RealmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private TextView txtLastName;
         private TextView txtAge;
         private TextView txtEmail;
-        private TextView txtContactsCount;
+        private TextView txtCount;
 
         public UserViewHolder(View v) {
             super(v);
@@ -88,7 +88,7 @@ public class RealmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             txtLastName = (TextView) v.findViewById(R.id.txtLastName);
             txtAge = (TextView) v.findViewById(R.id.txtAge);
             txtEmail = (TextView) v.findViewById(R.id.txtEmail);
-            txtContactsCount = (TextView) v.findViewById(R.id.txtContactsCount);
+            txtCount = (TextView) v.findViewById(R.id.txtContactsCount);
         }
     }
 }
