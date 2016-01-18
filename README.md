@@ -120,10 +120,11 @@ public class RealmApplication extends Application {
 }
 ```
 ```java
+public class RealmActivity extends AppCompatActivity {
 
-	private Realm mRealm;
+    protected Realm mRealm;
 
- @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRealm = Realm.getDefaultInstance();
@@ -132,8 +133,11 @@ public class RealmApplication extends Application {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mRealm.close();
+        if (mRealm != null) {
+            mRealm.close();
+        }
     }
+}
 ```
 *Reuse RealmResults and RealmObjects*
 
