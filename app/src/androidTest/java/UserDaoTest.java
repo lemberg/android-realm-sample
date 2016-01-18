@@ -14,6 +14,8 @@ import io.realm.RealmObject;
 
 public class UserDaoTest extends InstrumentationTestCase {
 
+    private Realm mRealm;
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -22,21 +24,21 @@ public class UserDaoTest extends InstrumentationTestCase {
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(context).build();
         Realm.setDefaultConfiguration(realmConfiguration);
 
-        RealmManager.open();
-        RealmManager.clear();
+        mRealm = Realm.getDefaultInstance();
+        RealmManager.clear(mRealm);
     }
 
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        RealmManager.clear();
-        RealmManager.close();
+        RealmManager.clear(mRealm);
+        mRealm.close();
     }
 
     public void testSaveUser() throws Exception {
         User saveUser = Generator.generateUser();
 
-        UserDao dao = RealmManager.createUserDao();
+        UserDao dao = RealmManager.createUserDao(mRealm);
         dao.save(saveUser);
         User loadUser = (User) dao.loadBy(saveUser.getId());
 
@@ -47,7 +49,7 @@ public class UserDaoTest extends InstrumentationTestCase {
     public void testSaveUserList() {
         List<User> saveList = Generator.generateUserList();
 
-        UserDao dao = RealmManager.createUserDao();
+        UserDao dao = RealmManager.createUserDao(mRealm);
         dao.save(saveList);
         List<User> loadList = dao.loadAll();
 
@@ -58,7 +60,7 @@ public class UserDaoTest extends InstrumentationTestCase {
     public void testRemove() {
         User saveUser = Generator.generateUser();
 
-        UserDao dao = RealmManager.createUserDao();
+        UserDao dao = RealmManager.createUserDao(mRealm);
         dao.save(saveUser);
 
         RealmObject realmObject = dao.loadBy(saveUser.getId());
@@ -71,7 +73,7 @@ public class UserDaoTest extends InstrumentationTestCase {
     public void testRemoveAll() {
         List<User> saveList = Generator.generateUserList();
 
-        UserDao dao = RealmManager.createUserDao();
+        UserDao dao = RealmManager.createUserDao(mRealm);
         dao.save(saveList);
         dao.removeAll();
 

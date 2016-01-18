@@ -17,7 +17,7 @@ import java.util.List;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends RealmActivity {
 
     private RealmAdapter mAdapter;
 
@@ -25,18 +25,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_home);
-        RealmManager.open();
 
         initViews();
         saveUserList();
         loadUserListAsync();
     }
 
-    @Override
-    protected void onDestroy() {
-        RealmManager.close();
-        super.onDestroy();
-    }
 
     private void initViews() {
         mAdapter = new RealmAdapter();
@@ -50,11 +44,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void saveUserList() {
-        RealmManager.createUserDao().save(Generator.generateUserList());
+        RealmManager.createUserDao(mRealm).save(Generator.generateUserList());
     }
 
     private void loadUserListAsync() {
-        final RealmResults<User> dataList = RealmManager.createUserDao().loadAllAsync();
+        final RealmResults<User> dataList = RealmManager.createUserDao(mRealm).loadAllAsync();
         dataList.addChangeListener(new RealmChangeListener() {
             @Override
             public void onChange() {
