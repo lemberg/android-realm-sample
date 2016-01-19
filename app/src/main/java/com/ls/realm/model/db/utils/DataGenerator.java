@@ -9,7 +9,7 @@ import java.util.List;
 
 import io.realm.RealmList;
 
-public class Generator {
+public class DataGenerator {
 
     @NonNull
     public static List<User> generateUserList() {

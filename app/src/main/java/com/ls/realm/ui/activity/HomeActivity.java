@@ -1,7 +1,6 @@
 package com.ls.realm.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import com.ls.realm.R;
 import com.ls.realm.model.db.RealmManager;
 import com.ls.realm.model.db.data.User;
-import com.ls.realm.model.db.utils.Generator;
+import com.ls.realm.model.db.utils.DataGenerator;
 import com.ls.realm.ui.adapter.RealmAdapter;
 
 import java.util.List;
@@ -44,7 +43,7 @@ public class HomeActivity extends RealmActivity {
     }
 
     private void saveUserList() {
-        RealmManager.createUserDao(mRealm).save(Generator.generateUserList());
+        RealmManager.createUserDao(mRealm).save(DataGenerator.generateUserList());
     }
 
     private void loadUserListAsync() {

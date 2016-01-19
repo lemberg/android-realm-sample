@@ -4,7 +4,7 @@ import android.test.InstrumentationTestCase;
 import com.ls.realm.model.db.RealmManager;
 import com.ls.realm.model.db.dao.UserDao;
 import com.ls.realm.model.db.data.User;
-import com.ls.realm.model.db.utils.Generator;
+import com.ls.realm.model.db.utils.DataGenerator;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class UserDaoTest extends InstrumentationTestCase {
     }
 
     public void testSaveUser() throws Exception {
-        User saveUser = Generator.generateUser();
+        User saveUser = DataGenerator.generateUser();
 
         UserDao dao = RealmManager.createUserDao(mRealm);
         dao.save(saveUser);
@@ -47,7 +47,7 @@ public class UserDaoTest extends InstrumentationTestCase {
     }
 
     public void testSaveUserList() {
-        List<User> saveList = Generator.generateUserList();
+        List<User> saveList = DataGenerator.generateUserList();
 
         UserDao dao = RealmManager.createUserDao(mRealm);
         dao.save(saveList);
@@ -57,8 +57,19 @@ public class UserDaoTest extends InstrumentationTestCase {
         assertTrue("Users Lists are not equal", isEquals);
     }
 
+    public void testLoadBy() {
+        User saveUser = DataGenerator.generateUser();
+
+        UserDao dao = RealmManager.createUserDao(mRealm);
+        dao.save(saveUser);
+        User loadUser = (User) dao.loadBy(saveUser.getId());
+
+        boolean isEquals = User.equals(saveUser, loadUser);
+        assertTrue(isEquals);
+    }
+
     public void testRemove() {
-        User saveUser = Generator.generateUser();
+        User saveUser = DataGenerator.generateUser();
 
         UserDao dao = RealmManager.createUserDao(mRealm);
         dao.save(saveUser);
@@ -71,7 +82,7 @@ public class UserDaoTest extends InstrumentationTestCase {
     }
 
     public void testRemoveAll() {
-        List<User> saveList = Generator.generateUserList();
+        List<User> saveList = DataGenerator.generateUserList();
 
         UserDao dao = RealmManager.createUserDao(mRealm);
         dao.save(saveList);
