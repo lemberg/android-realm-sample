@@ -24,21 +24,21 @@ public class UserDaoTest extends InstrumentationTestCase {
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(context).build();
         Realm.setDefaultConfiguration(realmConfiguration);
 
-        mRealm = Realm.getDefaultInstance();
-        RealmManager.clear(mRealm);
+        mRealm = RealmManager.open();
+        RealmManager.clear();
     }
 
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        RealmManager.clear(mRealm);
+        RealmManager.clear();
         mRealm.close();
     }
 
     public void testSaveUser() throws Exception {
         User saveUser = DataGenerator.generateUser();
 
-        UserDao dao = RealmManager.createUserDao(mRealm);
+        UserDao dao = RealmManager.createUserDao();
         dao.save(saveUser);
         User loadUser = (User) dao.loadBy(saveUser.getId());
 
@@ -49,7 +49,7 @@ public class UserDaoTest extends InstrumentationTestCase {
     public void testSaveUserList() {
         List<User> saveList = DataGenerator.generateUserList();
 
-        UserDao dao = RealmManager.createUserDao(mRealm);
+        UserDao dao = RealmManager.createUserDao();
         dao.save(saveList);
         List<User> loadList = dao.loadAll();
 
@@ -60,7 +60,7 @@ public class UserDaoTest extends InstrumentationTestCase {
     public void testLoadBy() {
         User saveUser = DataGenerator.generateUser();
 
-        UserDao dao = RealmManager.createUserDao(mRealm);
+        UserDao dao = RealmManager.createUserDao();
         dao.save(saveUser);
         User loadUser = (User) dao.loadBy(saveUser.getId());
 
@@ -71,7 +71,7 @@ public class UserDaoTest extends InstrumentationTestCase {
     public void testRemove() {
         User saveUser = DataGenerator.generateUser();
 
-        UserDao dao = RealmManager.createUserDao(mRealm);
+        UserDao dao = RealmManager.createUserDao();
         dao.save(saveUser);
 
         RealmObject realmObject = dao.loadBy(saveUser.getId());
@@ -84,7 +84,7 @@ public class UserDaoTest extends InstrumentationTestCase {
     public void testRemoveAll() {
         List<User> saveList = DataGenerator.generateUserList();
 
-        UserDao dao = RealmManager.createUserDao(mRealm);
+        UserDao dao = RealmManager.createUserDao();
         dao.save(saveList);
         dao.removeAll();
 

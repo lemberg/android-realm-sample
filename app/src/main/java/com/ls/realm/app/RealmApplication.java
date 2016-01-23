@@ -9,7 +9,12 @@ public class RealmApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
+        RealmConfiguration realmConfiguration =
+                new RealmConfiguration.Builder(this)
+                        .name("realm-sample.db")
+                        .schemaVersion(1)
+                        .build();
+
         Realm.setDefaultConfiguration(realmConfiguration);
     }
 }

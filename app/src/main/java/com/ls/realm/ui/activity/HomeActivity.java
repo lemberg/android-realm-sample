@@ -1,6 +1,7 @@
 package com.ls.realm.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +17,7 @@ import java.util.List;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
-public class HomeActivity extends RealmActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private RealmAdapter mAdapter;
 
@@ -24,12 +25,18 @@ public class HomeActivity extends RealmActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_home);
+        RealmManager.open();
 
         initViews();
         saveUserList();
         loadUserListAsync();
     }
 
+    @Override
+    protected void onDestroy() {
+        RealmManager.close();
+        super.onDestroy();
+    }
 
     private void initViews() {
         mAdapter = new RealmAdapter();
@@ -43,11 +50,11 @@ public class HomeActivity extends RealmActivity {
     }
 
     private void saveUserList() {
-        RealmManager.createUserDao(mRealm).save(DataGenerator.generateUserList());
+        RealmManager.createUserDao().save(DataGenerator.generateUserList());
     }
 
     private void loadUserListAsync() {
-        final RealmResults<User> dataList = RealmManager.createUserDao(mRealm).loadAllAsync();
+        final RealmResults<User> dataList = RealmManager.createUserDao().loadAllAsync();
         dataList.addChangeListener(new RealmChangeListener() {
             @Override
             public void onChange() {
