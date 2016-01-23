@@ -1,15 +1,14 @@
 package com.ls.realm.model.db.dao;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.ls.realm.model.db.data.User;
+
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
-
-import java.util.List;
 
 public class UserDao {
 

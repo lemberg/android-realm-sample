@@ -31,12 +31,13 @@ public class RealmManager {
             @Override
             public void execute(Realm realm) {
                 realm.clear(User.class);
+                //clear rest of your dao classes
             }
         });
     }
 
     private static void checkForOpenRealm() {
-        if (mRealm == null) {
+        if (mRealm == null || mRealm.isClosed()) {
             throw new IllegalStateException("RealmManager: Realm is closed, call open() method first");
         }
     }

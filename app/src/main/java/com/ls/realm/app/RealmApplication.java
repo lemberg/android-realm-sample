@@ -9,6 +9,7 @@ public class RealmApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         RealmConfiguration realmConfiguration =
                 new RealmConfiguration.Builder(this)
                         .name("realm-sample.db")
